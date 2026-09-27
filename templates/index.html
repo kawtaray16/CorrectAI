@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="CorrectAI - Correcteur intelligent de textes en français, arabe et anglais"
+    >
+
+    <title>CorrectAI — Correcteur intelligent</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-container">
+
+            <a href="/" class="logo">
+
+                <div class="logo-icon">
+                    ✦
+                </div>
+
+                <div>
+                    <strong>CorrectAI</strong>
+                    <span>Smart Writing Assistant</span>
+                </div>
+
+            </a>
+
+
+            <div class="header-language">
+
+                <button
+                    class="header-lang-btn active"
+                    data-interface-language="fr"
+                >
+                    FR
+                </button>
+
+                <button
+                    class="header-lang-btn"
+                    data-interface-language="ar"
+                >
+                    AR
+                </button>
+
+                <button
+                    class="header-lang-btn"
+                    data-interface-language="en"
+                >
+                    EN
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                <span class="status-dot"></span>
+                Correction intelligente
+            </div>
+
+            <h1>
+                Écrivez avec
+                <span>confiance.</span>
+            </h1>
+
+            <p>
+                Corrigez votre orthographe, votre grammaire
+                et votre ponctuation en français, arabe et anglais.
+            </p>
+
+        </section>
+
+
+        <!-- APPLICATION -->
+
+        <section class="editor-wrapper">
+
+            <div class="editor-card">
+
+
+                <!-- TOOLBAR -->
+
+                <div class="toolbar">
+
+                    <div class="language-selector">
+
+                        <span class="toolbar-label">
+                            Langue
+                        </span>
+
+                        <select id="languageSelect">
+
+                            <option value="auto">
+                                🌐 Détection automatique
+                            </option>
+
+                            <option value="fr">
+                                🇫🇷 Français
+                            </option>
+
+                            <option value="ar">
+                                🇩🇿 العربية
+                            </option>
+
+                            <option value="en">
+                                🇬🇧 English
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="toolbar-actions">
+
+                        <button
+                            id="clearButton"
+                            class="tool-button"
+                            type="button"
+                        >
+                            Effacer
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EDITORS -->
+
+                <div class="editors-grid">
+
+
+                    <!-- ORIGINAL -->
+
+                    <div class="text-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-title">
+                                    Votre texte
+                                </span>
+
+                                <span
+                                    id="inputStatus"
+                                    class="panel-status"
+                                >
+                                    Prêt
+                                </span>
+
+                            </div>
+
+                            <span id="wordCount">
+                                0 mots
+                            </span>
+
+                        </div>
+
+
+                        <textarea
+                            id="textInput"
+                            placeholder="Saisissez ou collez votre texte ici..."
+                            spellcheck="false"
+                        ></textarea>
+
+
+                        <div class="panel-footer">
+
+                            <span id="characterCount">
+                                0 caractères
+                            </span>
+
+                            <button
+                                id="correctButton"
+                                class="correct-button"
+                                type="button"
+                            >
+
+                                <span class="button-icon">
+                                    ✦
+                                </span>
+
+                                <span>
+                                    Corriger le texte
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RESULT -->
+
+                    <div class="text-panel result-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-title">
+                                    Texte corrigé
+                                </span>
+
+                                <span
+                                    id="resultLanguage"
+                                    class="panel-status"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+                            <button
+                                id="copyButton"
+                                class="copy-button"
+                                type="button"
+                            >
+                                Copier
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            id="resultText"
+                            class="result-text"
+                        >
+
+                            <div class="empty-result">
+
+                                <div class="empty-icon">
+                                    ✦
+                                </div>
+
+                                <h3>
+                                    Votre texte corrigé apparaîtra ici
+                                </h3>
+
+                                <p>
+                                    Saisissez votre texte puis cliquez
+                                    sur « Corriger le texte ».
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="panel-footer result-footer">
+
+                            <span id="correctionStatus">
+                                Aucune correction
+                            </span>
+
+                            <span class="success-indicator">
+                                ●
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATISTICS -->
+
+                <div class="statistics">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+                            Aa
+                        </div>
+
+                        <div>
+
+                            <span class="stat-value" id="statWords">
+                                0
+                            </span>
+
+                            <span class="stat-label">
+                                Mots
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+                            #
+                        </div>
+
+                        <div>
+
+                            <span
+                                class="stat-value"
+                                id="statCharacters"
+                            >
+                                0
+                            </span>
+
+                            <span class="stat-label">
+                                Caractères
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-icon error-icon">
+                            !
+                        </div>
+
+                        <div>
+
+                            <span
+                                class="stat-value"
+                                id="statErrors"
+                            >
+                                0
+                            </span>
+
+                            <span class="stat-label">
+                                Erreurs détectées
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CORRECTIONS -->
+
+        <section
+            id="correctionsSection"
+            class="corrections-section hidden"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        ANALYSE
+                    </span>
+
+                    <h2>
+                        Détails des corrections
+                    </h2>
+
+                </div>
+
+                <span id="correctionCount">
+                    0 corrections
+                </span>
+
+            </div>
+
+
+            <div id="correctionsList">
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <section class="features">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🌍
+                </div>
+
+                <h3>
+                    Multilingue
+                </h3>
+
+                <p>
+                    Français, arabe et anglais dans une seule
+                    application.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    Correction intelligente
+                </h3>
+
+                <p>
+                    Détection de fautes d'orthographe, grammaire
+                    et ponctuation.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Rapide
+                </h3>
+
+                <p>
+                    Analysez votre texte en quelques secondes.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 CorrectAI — Intelligent Multilingual Writing
+        </p>
+
+    </footer>
+
+
+    <!-- TOAST -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+        <span id="toastMessage"></span>
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}"
+    ></script>
+
+</body>
+
+</html>
